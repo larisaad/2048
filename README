@@ -1,0 +1,25 @@
+Programarea Calculatoarelor, seria CC
+Tema2 - 2048
+
+Functia main initializeaza ncurses, creeaza o fereastra si aloca doua matrice in care se va retine tabla de joc in ultimile ei doua faze.
+Din main, se apeleaza functia meniu, care reprezinta meniul jocului. Navigarea in meniu se face cu sagetile.
+
+Functia new_game pleaca de la cele doua matrice (a, b) initializate cu 0. Se permit citirea de la tastatura a caracterelor a,s,w,d - fiecare permitand o deplasare, u - undo, copiaza penultima matrice in ultima si se scade punctajul acumulat in ultima deplasare, intorcandu-ne la miscarea din urma, si q - ce iese din new_game. Miscarea automata a ceulelor se implementeaza tot in functia new_game, in primul switch. Daca nu se selecteaza nicio tasta, in numarul de secunde definite la inceputul fisierului, se apeleaza functia auto_solve.
+Inainte de fiecare deplasare, se copiaza matricea a in b, prin functia copy_matrix, si de asemenea se retine si punctajul, pentru undo.
+
+Functia deplasare primeste ca parametrii fereastra, punctajul si matricea, precum si DOUA VALORI DE 0, 1 SAU -1, care indica directia de deplasare.
+0, 1 - stanga
+0, -1 - dreapta
+1, 0 - sus
+-1, 0 jos
+Functia deplasare executa toate deplasarile posibile in functie de parametrii. Algoritmul mutarii celulelor se bazeaza pe verificarea tuturor variantelor posibile de mutare si combinare a celulelor si se executa printr-un for tututor liniilor sau coloanelor( depinde de deplasare), in sensul deplasarii. Cand se identifica modalitatea de mutare si combinare a celulelor, se va iesi cu break din while.
+Mentionez ca algoritmul nu este foarte eficient, si la anumite deplasari, dureaza mai mult timp implementarea ( nu pot sa mi dau seama din ce cauza), dar nu se blocheaza! :) :) have patience
+Se actualizeaza punctajul dupa fiecare combinare de celule.
+Daca o miscare e valida, matricea a va fi diferita de matricea b, se va generea alt numar cu functia generare_numar().
+Jocul este pierdut cand nu mai are loc nicio mutare valida, matricea a este egala cu matricea b si matricea a nu mai are spatii goale.
+
+Functia auto_solve efectueaza, pe rand toate deplasarile, si decide care elibereaza cele mai multe celule de 0. Apoi, apeleaza aceasta functie. Pentru ca se apeleaza de 5 ori functia deplasare, care nu are o eficienta atat de buna, s-ar putea ca jocul sa mearga mult mai greu aici, dar nu da crash, se rezolva deplasarea care elibereaza cele mai multe zerouri. De asemenea, cand se da resume, jocul fiind pe auto_solve s-ar putea sa-i ia undeva la maxim 10 secunde sa revina.
+
+Functia creare_tabel afiseaza legenda comenzilor. Functia coloreaza coloreaza casuta fiecarui numar si functia actualizare_fereastra actualizeaza fereastra (tabela, scorul si data) dupa fiecare deplasare.
+
+Ca bonus, am folosit culorile si efectul de blink, si butonul de undo (care face undo la ultima mutare). De asemenea, jocul nu se termina la 2048, ci se pot obtine scoruri mai mari de atat.
